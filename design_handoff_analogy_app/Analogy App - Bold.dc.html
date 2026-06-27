@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box}
+  body{margin:0}
+  textarea::placeholder{color:#9a9a9a}
+  .phone-scroll::-webkit-scrollbar{width:0;height:0}
+</style>
+</helmet>
+
+<div style="width:max-content;min-width:100%;min-height:100vh;box-sizing:border-box;padding:48px;background:#e7e5df;font-family:'Space Grotesk',sans-serif;display:flex;flex-direction:column;align-items:center">
+
+  <div style="text-align:center;margin-bottom:26px">
+    <div style="font-size:13px;font-weight:700;letter-spacing:1.6px;text-transform:uppercase;color:#0e0e0e">C &middot; Bold</div>
+    <div style="font-size:13px;color:#7d796f;margin-top:4px">confident grotesk &middot; hard edges &middot; electric violet &middot; reflection loop</div>
+  </div>
+
+  <div style="width:392px;height:812px;display:flex;flex-direction:column;background:#fff;border:1.5px solid #111;border-radius:22px;box-shadow:14px 14px 0 #E5DCFA;overflow:hidden">
+
+    <!-- status bar -->
+    <div style="height:44px;display:flex;align-items:center;justify-content:space-between;padding:0 22px;flex:none;color:#0e0e0e;font-weight:600;font-size:14px">
+      <span>9:41</span>
+      <div style="display:flex;align-items:center;gap:7px">
+        <span style="font-size:12px;font-weight:700">5G</span>
+        <div style="width:24px;height:12px;border:1.3px solid #0e0e0e;border-radius:3px;position:relative">
+          <div style="position:absolute;left:1.5px;top:1.5px;bottom:1.5px;width:62%;background:#0e0e0e;border-radius:1px"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- journey pills -->
+    <div style="display:flex;gap:8px;padding:4px 22px 8px;flex:none">
+      <span style="{{ topCtx }}">1 context</span>
+      <span style="{{ topRes }}">2 results</span>
+      <span style="{{ topLib }}">3 library</span>
+    </div>
+
+    <!-- content -->
+    <div style="flex:1;overflow-y:auto;padding:8px 22px 24px" class="phone-scroll">
+
+      <!-- ===== FIND ===== -->
+      <sc-if value="{{ isFind }}" hint-placeholder-val="{{ true }}">
+
+        <!-- step 1 -->
+        <sc-if value="{{ isStep1 }}" hint-placeholder-val="{{ true }}">
+          <div style="display:flex;align-items:baseline;justify-content:space-between;margin-top:6px;gap:12px">
+            <h2 style="font-family:'Space Grotesk',sans-serif;font-size:30px;font-weight:700;letter-spacing:-0.9px;color:#0e0e0e;margin:0;white-space:nowrap">find an analogy</h2>
+            <span style="{{ stepStyle }}">{{ stepLabel }}</span>
+          </div>
+
+          <label style="{{ labelStyle }}">what are you explaining?</label>
+          <textarea placeholder="e.g. why payroll compliance matters for small businesses" value="{{ topic }}" onInput="{{ onTopic }}" style="width:100%;min-height:94px;padding:14px;border-radius:12px;border:1.5px solid #111;background:#FAFAFA;color:#0e0e0e;font-family:'Space Grotesk',sans-serif;font-size:15px;line-height:1.4;resize:none;outline:none"></textarea>
+
+          <label style="{{ labelStyle }}">your audience</label>
+          <div style="display:flex;flex-wrap:wrap;gap:9px">
+            <sc-for list="{{ audOpts }}" as="opt" hint-placeholder-count="5">
+              <button data-val="{{ opt.val }}" onClick="{{ opt.onClick }}" style="{{ opt.style }}">{{ opt.label }}</button>
+            </sc-for>
+          </div>
+
+          <label style="{{ labelStyle }}">goal of the analogy</label>
+          <div style="display:flex;flex-wrap:wrap;gap:9px">
+            <sc-for list="{{ goalOpts }}" as="opt" hint-placeholder-count="4">
+              <button data-val="{{ opt.val }}" onClick="{{ opt.onClick }}" style="{{ opt.style }}">{{ opt.label }}</button>
+            </sc-for>
+          </div>
+
+          <button onClick="{{ onNext }}" style="{{ ctaStyle }}" style-hover="transform:translate(2px,2px);box-shadow:3px 3px 0 #6D28D9">frame the moment <span style="font-size:18px;line-height:1">&#8599;</span></button>
+        </sc-if>
+
+        <!-- step 2 -->
+        <sc-if value="{{ isStep2 }}" hint-placeholder-val="{{ true }}">
+          <div style="display:flex;align-items:baseline;justify-content:space-between;margin-top:6px;gap:12px">
+            <h2 style="font-family:'Space Grotesk',sans-serif;font-size:30px;font-weight:700;letter-spacing:-0.9px;color:#0e0e0e;margin:0;white-space:nowrap">frame the moment</h2>
+            <span style="{{ stepStyle }}">{{ stepLabel }}</span>
+          </div>
+
+          <div style="background:#F3EEFC;border:1.5px solid #E0D4F7;border-radius:10px;padding:11px 14px;margin-top:8px;color:#5B21B6;font-weight:600;font-size:13.5px">{{ recap }}</div>
+
+          <label style="{{ labelStyle }}">emotional register</label>
+          <div style="display:flex;flex-wrap:wrap;gap:9px">
+            <sc-for list="{{ toneOpts }}" as="opt" hint-placeholder-count="4">
+              <button data-val="{{ opt.val }}" onClick="{{ opt.onClick }}" style="{{ opt.style }}">{{ opt.label }}</button>
+            </sc-for>
+          </div>
+
+          <sc-if value="{{ notSearched }}" hint-placeholder-val="{{ true }}">
+            <button onClick="{{ doSearch }}" style="{{ ctaStyle }}" style-hover="transform:translate(2px,2px);box-shadow:3px 3px 0 #6D28D9">find analogies <span style="font-size:18px;line-height:1">&#8599;</span></button>
+            <button onClick="{{ onBack }}" style="{{ linkStyle }}">&#8592; back to context</button>
+          </sc-if>
+
+          <sc-if value="{{ searched }}" hint-placeholder-val="{{ false }}">
+            <div style="margin-top:28px;padding:20px;border-radius:12px;background:#6D28D9;border:1.5px solid #111;box-shadow:5px 5px 0 #111">
+              <div style="font-family:'Space Grotesk',sans-serif;font-size:17px;font-weight:700;color:#fff">&#10003; {{ matchLabel }}</div>
+              <div style="font-size:13px;color:#D9CCF6;margin-top:7px;line-height:1.45">tuned for {{ recapShort }}. the loop is propose &rarr; use &rarr; reflect.</div>
+              <button onClick="{{ onLib }}" style="margin-top:14px;background:#fff;border:none;border-radius:8px;padding:9px 14px;color:#6D28D9;font-family:'Space Grotesk',sans-serif;font-size:13.5px;font-weight:700;cursor:pointer">save to library &#8599;</button>
+            </div>
+            <button onClick="{{ onBack }}" style="{{ linkStyle }}">&#8592; reframe</button>
+          </sc-if>
+        </sc-if>
+
+      </sc-if>
+
+      <!-- ===== LIBRARY ===== -->
+      <sc-if value="{{ isLibrary }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;align-items:baseline;justify-content:space-between;margin-top:6px">
+          <h2 style="font-family:'Space Grotesk',sans-serif;font-size:30px;font-weight:700;letter-spacing:-0.9px;color:#0e0e0e;margin:0">library</h2>
+          <span style="{{ stepStyle }}">{{ libSummary }}</span>
+        </div>
+
+        <!-- import affordance -->
+        <sc-if value="{{ importClosed }}" hint-placeholder-val="{{ true }}">
+          <div onClick="{{ onImport }}" style="border:1.5px dashed #111;border-radius:12px;padding:14px 15px;margin:18px 0 6px;display:flex;align-items:center;gap:11px;cursor:pointer;background:#FAFAFA">
+            <span style="font-size:17px;line-height:1">&#8595;</span>
+            <span style="font-size:13.5px;font-weight:600;color:#0e0e0e">import analogies from a recent pitch</span>
+          </div>
+        </sc-if>
+        <sc-if value="{{ importOpen }}" hint-placeholder-val="{{ false }}">
+          <div style="border:1.5px solid #111;border-radius:12px;padding:14px;margin:18px 0 6px;background:#fff;box-shadow:4px 4px 0 #6D28D9">
+            <div style="font-size:10px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:#9a9a9a;margin-bottom:9px">paste a pitch &middot; we extract the metaphors</div>
+            <textarea placeholder="Paste a transcript or pitch deck text\u2026" style="width:100%;min-height:72px;padding:12px;border-radius:9px;border:1.5px solid #E2E2E2;background:#FAFAFA;color:#0e0e0e;font-family:'Space Grotesk',sans-serif;font-size:14px;line-height:1.4;resize:none;outline:none"></textarea>
+            <div style="display:flex;gap:8px;margin-top:10px">
+              <button onClick="{{ onImport }}" style="flex:1;padding:10px;border-radius:8px;border:1.5px solid #111;background:#111;color:#fff;font-family:'Space Grotesk',sans-serif;font-size:13.5px;font-weight:700;cursor:pointer">extract analogies</button>
+              <button onClick="{{ onImport }}" style="padding:10px 14px;border-radius:8px;border:1.5px solid #E2E2E2;background:#fff;color:#6b6b6b;font-family:'Space Grotesk',sans-serif;font-size:13.5px;font-weight:600;cursor:pointer">cancel</button>
+            </div>
+          </div>
+        </sc-if>
+
+        <!-- filters -->
+        <div style="display:flex;flex-wrap:wrap;gap:9px;margin:14px 0 4px">
+          <sc-for list="{{ filterOpts }}" as="opt" hint-placeholder-count="4">
+            <button data-val="{{ opt.val }}" onClick="{{ opt.onClick }}" style="{{ opt.style }}">{{ opt.label }}</button>
+          </sc-for>
+        </div>
+
+        <!-- cards -->
+        <div style="margin-top:16px">
+          <sc-for list="{{ lib }}" as="it" hint-placeholder-count="4">
+            <div style="background:#fff;border:1.5px solid #111;border-radius:12px;padding:15px;margin-bottom:14px;box-shadow:4px 4px 0 #111">
+              <p style="font-family:'Space Grotesk',sans-serif;font-size:15.5px;line-height:1.4;color:#0e0e0e;margin:0 0 13px;font-weight:500">{{ it.text }}</p>
+              <div style="display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin-bottom:14px;font-family:'Space Grotesk',sans-serif;font-size:12px;color:#6b6b6b">
+                <span style="padding:3px 9px;border:1.5px solid #111;border-radius:999px;font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:#111;background:#fff">{{ it.tagLabel }}</span>
+                <span>{{ it.audience }}</span>
+                <span style="color:#C9C9C9">|</span>
+                <span>{{ it.usesLabel }}</span>
+              </div>
+              <div style="font-size:10px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:#9a9a9a;margin-bottom:8px">did it land?</div>
+              <div style="display:flex;gap:7px">
+                <sc-for list="{{ it.reflect }}" as="r" hint-placeholder-count="3">
+                  <button onClick="{{ r.onClick }}" style="{{ r.style }}">{{ r.label }}</button>
+                </sc-for>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+      </sc-if>
+
+    </div>
+
+    <!-- bottom nav -->
+    <div style="flex:none;border-top:1.5px solid #111;display:flex;padding:11px 0 20px;background:#fff">
+      <button onClick="{{ onFind }}" style="flex:1;background:none;border:none;cursor:pointer;padding:0">
+        <span style="{{ navFind }}">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.5" y2="16.5"/></svg>
+          <span>find</span>
+        </span>
+      </button>
+      <button onClick="{{ onLib }}" style="flex:1;background:none;border:none;cursor:pointer;padding:0">
+        <span style="{{ navLib }}">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"><path d="M6 3h12v18l-6-4-6 4z"/></svg>
+          <span>library</span>
+        </span>
+      </button>
+      <div style="flex:1;display:flex;justify-content:center">
+        <span style="{{ navIns }}">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><line x1="5" y1="20" x2="5" y2="13"/><line x1="12" y1="20" x2="12" y2="7"/><line x1="19" y1="20" x2="19" y2="11"/></svg>
+          <span>insights</span>
+        </span>
+      </div>
+    </div>
+
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = {
+    tab: 'find', step: 1, topic: '', audience: 'founders', goal: 'simplify something complex',
+    stakes: 'meaningful', tone: 'reassure', libFilter: 'all', searched: false, importOpen: false,
+    lib: [
+      { id: 1, text: 'Churn is a leaky bucket \u2014 pouring in more leads will never outrun the holes.', tag: 'pitch', audience: 'founders', status: 'landed', uses: 6 },
+      { id: 2, text: 'Payroll compliance is a building\u2019s fire code: invisible until the day it saves you.', tag: 'pitch', audience: 'executives', status: 'landed', uses: 4 },
+      { id: 3, text: 'Our API is the plumbing \u2014 nobody admires it until it leaks.', tag: 'talk', audience: 'engineers', status: 'landed', uses: 3 },
+      { id: 4, text: 'Onboarding is a first date, not a wedding. Don\u2019t ask for everything up front.', tag: 'investor deck', audience: 'investors', status: 'confusing', uses: 2 },
+      { id: 5, text: 'Switching vendors is repotting a plant \u2014 stressful for a week, then it grows.', tag: 'pitch', audience: 'executives', status: 'confusing', uses: 1 },
+      { id: 6, text: 'Our caching layer is milk on the counter vs. milk in the fridge.', tag: 'talk', audience: 'engineers', status: 'cut', uses: 1 }
+    ]
+  };
+
+  set(obj) { this.setState(obj); }
+
+  renderVals() {
+    const GRO = "'Space Grotesk', sans-serif";
+    const VIOLET = '#6D28D9';
+    const s = this.state;
+
+    const AUD = ['founders', 'investors', 'engineers', 'executives', 'general public'];
+    const GOAL = ['simplify something complex', 'build trust', 'create urgency', 'reframe risk'];
+    const STAKE = ['low', 'meaningful', 'career-defining'];
+    const TONE = ['reassure', 'excite', 'provoke', 'clarify'];
+    const FILTER = ['all', 'pitch', 'talk', 'investor deck'];
+
+    const RM = { landed: '#1F8A4C', confusing: '#C77D11', cut: '#111111' };
+
+    const chip = (sel, violet) => ({
+      display: 'inline-flex', alignItems: 'center', gap: '6px', padding: '10px 16px', borderRadius: '999px',
+      border: '1.5px solid ' + (sel ? (violet ? VIOLET : '#111') : '#111'),
+      background: sel ? (violet ? VIOLET : '#111') : '#fff',
+      color: sel ? '#fff' : '#0e0e0e',
+      fontFamily: GRO, fontSize: '14px', fontWeight: 600, lineHeight: 1.1, cursor: 'pointer', whiteSpace: 'nowrap', transition: 'all .14s ease'
+    });
+
+    const pick = (key) => (e) => this.set({ [key]: e.currentTarget.dataset.val });
+    const opts = (list, cur, key, violet) => list.map(o => ({ val: o, label: o, style: chip(cur === o, violet), onClick: pick(key) }));
+
+    const topPill = (active) => ({
+      display: 'inline-flex', alignItems: 'center', padding: '6px 13px', borderRadius: '999px',
+      fontFamily: GRO, fontSize: '12px', fontWeight: 600, whiteSpace: 'nowrap',
+      border: '1.5px solid ' + (active ? VIOLET : '#E2E2E2'),
+      background: active ? VIOLET : '#fff', color: active ? '#fff' : '#9a9a9a'
+    });
+
+    const nav = (active, faint) => ({
+      display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px',
+      color: faint ? '#C2C2C2' : (active ? VIOLET : '#6b6b6b'), fontFamily: GRO, fontSize: '11px', fontWeight: 600
+    });
+
+    const reflectStyle = (active, st) => ({
+      flex: 1, padding: '8px 0', borderRadius: '8px',
+      border: '1.5px solid ' + (active ? RM[st] : '#E2E2E2'),
+      background: active ? RM[st] : '#fff', color: active ? '#fff' : '#9a9a9a',
+      fontFamily: GRO, fontSize: '12px', fontWeight: 600, cursor: 'pointer', textTransform: 'capitalize', transition: 'all .12s ease'
+    });
+
+    const labelStyle = { display: 'block', margin: '24px 0 11px', fontFamily: GRO, fontSize: '11px', fontWeight: 700, letterSpacing: '1.4px', textTransform: 'uppercase', color: '#9a9a9a' };
+    const stepStyle = { fontFamily: GRO, fontSize: '11px', fontWeight: 700, letterSpacing: '1px', textTransform: 'uppercase', color: VIOLET, whiteSpace: 'nowrap', flex: 'none' };
+    const ctaStyle = { width: '100%', padding: '16px', borderRadius: '12px', background: '#111', color: '#fff', fontFamily: GRO, fontSize: '16px', fontWeight: 700, cursor: 'pointer', marginTop: '28px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', border: 'none', boxShadow: '5px 5px 0 ' + VIOLET, transition: 'all .12s ease' };
+    const linkStyle = { background: 'none', border: 'none', color: '#6b6b6b', fontFamily: GRO, fontSize: '14px', fontWeight: 600, cursor: 'pointer', marginTop: '15px', display: 'block', width: '100%', textAlign: 'center' };
+
+    const filtered = s.lib.filter(x => s.libFilter === 'all' || x.tag === s.libFilter);
+    const lib = filtered.map(x => ({
+      text: x.text, audience: x.audience, tagLabel: x.tag, usesLabel: 'used ' + x.uses + '\u00d7',
+      reflect: ['landed', 'confusing', 'cut'].map(st => ({
+        label: st, style: reflectStyle(x.status === st, st),
+        onClick: () => this.set({ lib: s.lib.map(y => y.id === x.id ? { ...y, status: st } : y) })
+      }))
+    }));
+
+    const landed = s.lib.filter(x => x.status === 'landed').length;
+
+    return {
+      topCtx: topPill(s.tab === 'find'), topRes: topPill(false), topLib: topPill(s.tab === 'library'),
+      isFind: s.tab === 'find', isLibrary: s.tab === 'library',
+      isStep1: s.step === 1, isStep2: s.step === 2,
+      searched: s.searched, notSearched: !s.searched,
+      importOpen: s.importOpen, importClosed: !s.importOpen,
+      stepLabel: s.step === 1 ? 'step 1 / 2' : 'step 2 / 2',
+      recap: 'for ' + s.audience + '  \u00b7  to ' + s.goal,
+      recapShort: s.audience + ', ' + s.tone,
+      matchLabel: '12 analogies matched',
+      libSummary: s.lib.length + ' saved \u00b7 ' + landed + ' landed',
+      topic: s.topic,
+
+      labelStyle, stepStyle, ctaStyle, linkStyle,
+      navFind: nav(s.tab === 'find', false), navLib: nav(s.tab === 'library', false), navIns: nav(false, true),
+
+      audOpts: opts(AUD, s.audience, 'audience', false),
+      goalOpts: opts(GOAL, s.goal, 'goal', true),
+      stakeOpts: opts(STAKE, s.stakes, 'stakes', false),
+      toneOpts: opts(TONE, s.tone, 'tone', false),
+      filterOpts: opts(FILTER, s.libFilter, 'libFilter', false),
+      lib,
+
+      onTopic: (e) => this.set({ topic: e.target.value }),
+      onNext: () => this.set({ step: 2 }),
+      onBack: () => this.set({ step: 1, searched: false }),
+      doSearch: () => this.set({ searched: true }),
+      onFind: () => this.set({ tab: 'find' }),
+      onLib: () => this.set({ tab: 'library' }),
+      onImport: () => this.set({ importOpen: !s.importOpen })
+    };
+  }
+}
+</script>
+</body>
+</html>

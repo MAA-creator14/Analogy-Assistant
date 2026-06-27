@@ -1,0 +1,40 @@
+@import "tailwindcss";
+
+@theme inline {
+  --font-space: var(--font-space-grotesk), sans-serif;
+
+  --color-ink:                #0e0e0e;
+  --color-violet:             #6D28D9;
+  --color-violet-dark:        #5B21B6;
+  --color-violet-tint:        #F3EEFC;
+  --color-violet-tint-border: #E0D4F7;
+  --color-violet-sub:         #D9CCF6;
+  --color-sub:                #6b6b6b;
+  --color-faint:              #9a9a9a;
+  --color-fainter:            #C2C2C2;
+  --color-hairline:           #E2E2E2;
+  --color-divider:            #C9C9C9;
+  --color-field:              #FAFAFA;
+  --color-landed:             #1F8A4C;
+  --color-confusing:          #C77D11;
+  --color-canvas:             #e7e5df;
+}
+
+* { box-sizing: border-box; }
+body { margin: 0; }
+textarea::placeholder { color: #9a9a9a; }
+
+.hide-scrollbar::-webkit-scrollbar { display: none; }
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Phone card chrome — only when viewport is wide enough to show canvas */
+@media (min-width: 480px) {
+  .phone-card {
+    border: 1.5px solid #111;
+    border-radius: 22px;
+    box-shadow: 14px 14px 0 #E5DCFA;
+  }
+}

@@ -1,0 +1,244 @@
+{
+  "topics": [
+    {
+      "topic": "compound interest / exponential growth",
+      "analogies": [
+        "Compound interest is like a snowball rolling downhill — it starts small, but gathers mass and speed the longer it rolls.",
+        "Exponential growth is like folding a piece of paper: after 42 folds, the stack would reach the moon.",
+        "Think of compounding as a copy machine that copies its own copies — the stack doubles every cycle."
+      ]
+    },
+    {
+      "topic": "churn / customer retention",
+      "analogies": [
+        "Churn is a leaky bucket — pouring in more leads will never outrun the holes at the bottom.",
+        "Losing customers is like trying to fill a bath with the drain open. Fix the drain before you turn on the tap.",
+        "Retention is the foundation of a building. You can add floors indefinitely, but not if the ground floor is crumbling."
+      ]
+    },
+    {
+      "topic": "product-market fit",
+      "analogies": [
+        "Product-market fit is like a key in a lock — you know immediately when it clicks.",
+        "Before product-market fit, growth is like pushing a boulder uphill. After it, you're steering a boulder downhill.",
+        "Finding product-market fit is less like aiming and more like listening — the market tells you where the fit is."
+      ]
+    },
+    {
+      "topic": "technical debt",
+      "analogies": [
+        "Technical debt is like financial debt — useful in the short term, but the interest compounds and eventually crowds out everything else.",
+        "Shipping code without refactoring is like paving over a pothole. You'll drive over it fine today, but the road will buckle.",
+        "Technical debt is the engineering equivalent of tidying a room by stuffing everything in the closet. The closet will eventually explode."
+      ]
+    },
+    {
+      "topic": "unit economics / profitability",
+      "analogies": [
+        "Unit economics are the heartbeat of a business. You can look healthy on the outside and still be losing money on every transaction.",
+        "Selling below cost and hoping to make it up on volume is like driving faster when you're lost — you get further from the destination, just more quickly.",
+        "A positive unit margin is the engine. Everything else — marketing, headcount, expansion — is just the vehicle."
+      ]
+    },
+    {
+      "topic": "network effects",
+      "analogies": [
+        "Network effects are like a telephone — one phone is useless, two is a conversation, a million is infrastructure.",
+        "A marketplace with network effects is like a coral reef: slow to grow, but once it reaches critical mass, everything else attaches itself.",
+        "Network effects create a gravitational field. The more mass you accumulate, the more you attract."
+      ]
+    },
+    {
+      "topic": "cash flow / burn rate",
+      "analogies": [
+        "Cash flow is the oxygen of a business. You can be profitable on paper and still suffocate if it runs out.",
+        "Runway is like the fuel gauge on a long drive through the desert — the number that matters most isn't how far you've come, it's how much is left.",
+        "Managing burn rate is like rationing water on a hike: you adjust your pace to reach the next water source, not to reach the destination faster."
+      ]
+    },
+    {
+      "topic": "payroll compliance / regulatory risk",
+      "analogies": [
+        "Payroll compliance is a building's fire code: invisible until the day it saves you — or burns you.",
+        "Ignoring payroll regulation is like ignoring a slow oil leak in your car. The engine runs fine until suddenly it doesn't.",
+        "Compliance is the foundation, not the ceiling. You don't build on sand and then wonder why the walls crack."
+      ]
+    },
+    {
+      "topic": "APIs / integrations",
+      "analogies": [
+        "An API is the electrical socket in a wall — we don't think about the infrastructure behind it, just that anything with a plug can connect.",
+        "Our API is the plumbing — nobody admires it until it leaks.",
+        "Integrations are like roads between cities: they unlock value that couldn't exist in isolation."
+      ]
+    },
+    {
+      "topic": "data and analytics",
+      "analogies": [
+        "Data without insight is a library without a catalogue — the answers are in there, but no one can find them.",
+        "Raw data is like ore. Insight is the refined metal. Most companies are still mining; few are refining.",
+        "Analytics is the rearview mirror. Strategy is the windscreen. You need both, but only one tells you where you're going."
+      ]
+    },
+    {
+      "topic": "user onboarding / activation",
+      "analogies": [
+        "Onboarding is a first date, not a wedding. Don't ask for everything up front.",
+        "A great onboarding experience is like a warm welcome at a hotel — the first impression sets the tone for every stay that follows.",
+        "Onboarding is the bridge between a user's intent and their first moment of value. If the bridge is shaky, most people turn back."
+      ]
+    },
+    {
+      "topic": "customer lifetime value (LTV)",
+      "analogies": [
+        "LTV is the total value of a fruit tree, not just this season's harvest. You plant it, tend it, and it pays back for years.",
+        "Judging customers by their first purchase is like judging a restaurant by its bread basket. The real value comes later.",
+        "LTV is the lens that turns short-term acquisition cost into a long-term investment."
+      ]
+    },
+    {
+      "topic": "competitive moat / defensibility",
+      "analogies": [
+        "A moat is the set of reasons a competitor can't simply copy you, even if they can see exactly what you're doing.",
+        "Data network effects are like the Grand Canyon — impressive today, but what matters is that they took millions of years to form.",
+        "Brand is a moat built from trust. Once established, competitors can spend fortunes and not cross it."
+      ]
+    },
+    {
+      "topic": "change management",
+      "analogies": [
+        "Organisational change is like replacing the engines on a plane mid-flight — the business must keep running as you transform it.",
+        "Change without communication is like moving the furniture at night. People know something shifted, they just keep stubbing their toes.",
+        "Resistance to change is like a rubber band — pull too fast and it snaps; apply consistent steady pressure and it stretches."
+      ]
+    },
+    {
+      "topic": "organisational structure / hierarchy",
+      "analogies": [
+        "A flat structure is like open-plan seating — great for collaboration, but exhausting when everyone can interrupt everyone.",
+        "Hierarchy is scaffolding, not the building itself. You need it to construct something, but the goal is eventually to remove it.",
+        "Span of control is like a branch on a tree — it can only hold so much weight before it bends or breaks."
+      ]
+    },
+    {
+      "topic": "strategy vs execution",
+      "analogies": [
+        "Strategy without execution is a map without a vehicle — it shows where to go, but doesn't move you.",
+        "A brilliant strategy poorly executed is like a perfect recipe with no chef. The dish never arrives.",
+        "Execution is the tax you pay on strategy. The higher your ambition, the heavier the tax."
+      ]
+    },
+    {
+      "topic": "scaling operations",
+      "analogies": [
+        "Scaling operations is like turning a speedboat into a cargo ship: you gain capacity, but you need a much longer runway to manoeuvre.",
+        "Scaling is not just doing more of the same — it's rebuilding the factory floor while the orders keep coming in.",
+        "Operational scale is like compound interest in reverse for complexity: every new layer adds friction that compounds over time."
+      ]
+    },
+    {
+      "topic": "vendor switching costs",
+      "analogies": [
+        "Switching vendors is repotting a plant — stressful for a week, then it grows.",
+        "High switching costs are like being in a lease: you knew the terms when you signed, but leaving still costs you.",
+        "Vendor lock-in is gravity. You don't notice it until you try to leave, then you feel every pound."
+      ]
+    },
+    {
+      "topic": "digital transformation",
+      "analogies": [
+        "Digital transformation is renovating a building while people are still working in it — modernisation without disruption.",
+        "Transforming a legacy system is like rewiring a house without turning off the electricity. Possible, but it demands extreme care.",
+        "Digital transformation isn't a project with an end date — it's a shift in how the organisation breathes."
+      ]
+    },
+    {
+      "topic": "brand and reputation",
+      "analogies": [
+        "Brand is a promise you make and a promise you keep — the gap between the two is where trust lives or dies.",
+        "Reputation is like porcelain: decades to build, a moment to shatter, and never quite the same after repair.",
+        "Your brand is what people say about you when you're not in the room."
+      ]
+    },
+    {
+      "topic": "sales funnel / pipeline",
+      "analogies": [
+        "A sales funnel is like panning for gold — you need a lot of water and gravel to find a few nuggets.",
+        "The pipeline is a river: it looks fine on the surface, but without upstream rain, it dries up months later.",
+        "Closing a deal is like landing a plane — most of the work happened miles before touchdown."
+      ]
+    },
+    {
+      "topic": "product roadmap prioritisation",
+      "analogies": [
+        "A roadmap is a hypothesis, not a contract. The best teams treat it like a weather forecast — directionally right, updated constantly.",
+        "Prioritising features is like packing a suitcase for a trip you haven't planned yet. Everyone wants to bring more than fits.",
+        "The roadmap is the menu, not the meal. What gets built is what gets served."
+      ]
+    },
+    {
+      "topic": "risk management",
+      "analogies": [
+        "Risk management is not about avoiding risk — it's about choosing which risks to carry intentionally.",
+        "Unmitigated risk is like driving without insurance. You might be fine, but a single event changes everything.",
+        "Scenario planning is like packing an umbrella — you don't expect rain, but you'd rather have it and not need it."
+      ]
+    },
+    {
+      "topic": "company culture",
+      "analogies": [
+        "Culture is what happens when no one is watching. The real values of an organisation show up in the small decisions.",
+        "Culture is like a river: it carves its own path over time. You can redirect it, but you can't stop it from flowing.",
+        "Hiring for culture fit without culture add is like only eating the foods you already know — safe, but the menu never grows."
+      ]
+    },
+    {
+      "topic": "leadership and delegation",
+      "analogies": [
+        "Leadership is less about having the answers and more about creating the conditions for others to find them.",
+        "Delegation without trust is like lending your car and driving alongside to make sure they don't crash.",
+        "A leader's job is to turn the lights on, not to illuminate every corner themselves."
+      ]
+    },
+    {
+      "topic": "innovation and experimentation",
+      "analogies": [
+        "Innovation is like prospecting — you dig a lot of holes before you strike something valuable.",
+        "An A/B test is a small, controlled argument with reality. Reality always wins.",
+        "Running experiments is like placing small bets. You want to lose cheaply and often enough to find the bet worth doubling down on."
+      ]
+    },
+    {
+      "topic": "market timing",
+      "analogies": [
+        "Market timing is surfing — being too early is as bad as being too late. You need to catch the wave, not the trough.",
+        "A great idea in the wrong decade is just an idea. Timing is the silent co-founder every startup either has or doesn't.",
+        "Being early to a market is like planting a flag on land you can't yet settle. Someone else arrives when the conditions are right."
+      ]
+    },
+    {
+      "topic": "fundraising and investment",
+      "analogies": [
+        "Raising money is like dating — you want to find someone who believes in the same future you do, not just someone who'll say yes.",
+        "Investors are buying a ticket on the plane before it takes off — they're betting on the destination, not just the current altitude.",
+        "Due diligence is like a medical check-up before a marathon. The investor wants to know you can finish the race."
+      ]
+    },
+    {
+      "topic": "marketing attribution",
+      "analogies": [
+        "Attribution is like asking which raindrop caused the flood — every one contributed, and singling one out misses the point.",
+        "Last-click attribution is like giving the finisher's medal to the person who tied your shoes at the finish line.",
+        "Multi-touch attribution is the honest map of how a customer actually reached you — messier than the straight line we'd prefer."
+      ]
+    },
+    {
+      "topic": "hiring and talent",
+      "analogies": [
+        "Great hiring is like casting a film — skills are important, but chemistry and timing make or break the final product.",
+        "A high performer in the wrong role is like a concert pianist asked to tune the piano. Talent wasted on the wrong problem.",
+        "Slow hiring, fast firing is wisdom. The inverse is how most bad teams are built."
+      ]
+    }
+  ]
+}
