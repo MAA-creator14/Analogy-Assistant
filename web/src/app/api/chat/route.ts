@@ -1,5 +1,5 @@
 import { streamText, Output } from 'ai'
-import { anthropic } from '@ai-sdk/anthropic'
+import { createAnthropic } from '@ai-sdk/anthropic'
 import { analogySchema } from './schema'
 import seedLibrary from '@/data/analogies.json'
 
@@ -20,10 +20,12 @@ ${JSON.stringify(seedLibrary.topics, null, 2)}
 Generate between 5 and 8 analogies. Prefer quality over quantity — return fewer if you cannot maintain a high bar. Do not repeat the same metaphor vehicle (e.g. two water analogies).\n`
 
 export async function POST(req: Request) {
-  const { topic, audience, goal, tone } = await req.json()
+  const { topic, audience, goal, tone, apiKey: userApiKey } = await req.json()
+
+  const provider = createAnthropic({ apiKey: userApiKey || process.env.ANTHROPIC_API_KEY })
 
   const result = streamText({
-    model: anthropic('claude-sonnet-4.6'),
+    model: provider('claude-sonnet-4-6'),
     output: Output.object({ schema: analogySchema }),
     system: SYSTEM_PROMPT,
     prompt: `Generate analogies for the following framing:

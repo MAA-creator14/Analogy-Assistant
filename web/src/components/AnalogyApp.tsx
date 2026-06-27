@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { experimental_useObject as useObject } from '@ai-sdk/react'
 import { analogySchema } from '@/app/api/chat/schema'
 
@@ -34,6 +34,23 @@ const AUD_OPTIONS = ['founders', 'investors', 'engineers', 'executives', 'genera
 const GOAL_OPTIONS = ['simplify something complex', 'build trust', 'create urgency', 'reframe risk'] as const
 const TONE_OPTIONS = ['reassure', 'excite', 'provoke', 'clarify'] as const
 const FILTER_OPTIONS: LibFilter[] = ['all', 'pitch', 'talk', 'investor deck']
+
+const STORAGE_KEY = 'analogy_api_key'
+
+const STUB_RESULTS: StreamedAnalogy[] = [
+  {
+    text: "Product-market fit is like tuning a radio — you know you've got it when the static disappears and the signal comes through clean.",
+    fit: 'Gives founders an intuitive feel for the qualitative shift, beyond just looking at retention metrics.',
+  },
+  {
+    text: 'Our pricing is like a gym membership — you pay for access, not per rep, so power users are a bonus rather than a burden.',
+    fit: 'Helps investors quickly grasp unit economics and why marginal cost stays flat as usage scales.',
+  },
+  {
+    text: 'Technical debt is borrowed money. Fine in small amounts when the interest is manageable — but it compounds.',
+    fit: 'Engineers and CTOs immediately understand the tradeoff between shipping speed and long-term maintainability.',
+  },
+]
 
 const REFLECT_COLOR: Record<ReflectStatus, string> = {
   landed: '#1F8A4C',
@@ -240,6 +257,67 @@ function AnalogyResultCard({ text, fit, saved, onSave, onCopy }: {
   )
 }
 
+/* ─── API key banner ─────────────────────────────────────────── */
+
+function ApiKeyBanner({ onGenerate }: { onGenerate: (key: string, remember: boolean) => void }) {
+  const [keyInput, setKeyInput] = useState('')
+  const [remember, setRemember] = useState(false)
+  const canSubmit = keyInput.trim().length > 0
+
+  return (
+    <div style={{
+      border: '1.5px solid #6D28D9', borderRadius: '12px',
+      padding: '16px', marginBottom: '16px', background: '#F8F5FF',
+    }}>
+      <p style={{
+        fontSize: '10px', fontWeight: 700, letterSpacing: '1px',
+        textTransform: 'uppercase', color: '#6D28D9', margin: '0 0 6px',
+      }}>
+        example results
+      </p>
+      <p style={{ fontSize: '14px', fontWeight: 500, color: '#0e0e0e', margin: '0 0 13px', lineHeight: 1.4 }}>
+        Enter your Anthropic API key to generate real analogies for your framing.
+      </p>
+      <input
+        type="password"
+        placeholder="sk-ant-..."
+        value={keyInput}
+        onChange={e => setKeyInput(e.target.value)}
+        onKeyDown={e => { if (e.key === 'Enter' && canSubmit) onGenerate(keyInput.trim(), remember) }}
+        style={{
+          width: '100%', padding: '11px 13px', borderRadius: '9px',
+          border: '1.5px solid #111', background: '#fff', color: '#0e0e0e',
+          fontFamily: 'inherit', fontSize: '14px', outline: 'none',
+          marginBottom: '10px', boxSizing: 'border-box',
+        }}
+      />
+      <label style={{ display: 'flex', alignItems: 'center', gap: '9px', cursor: 'pointer', marginBottom: '13px' }}>
+        <input
+          type="checkbox"
+          checked={remember}
+          onChange={e => setRemember(e.target.checked)}
+          style={{ width: '16px', height: '16px', accentColor: '#6D28D9', cursor: 'pointer', flexShrink: 0 }}
+        />
+        <span style={{ fontSize: '13px', fontWeight: 600, color: '#0e0e0e' }}>remember this key</span>
+      </label>
+      <button
+        onClick={() => canSubmit && onGenerate(keyInput.trim(), remember)}
+        disabled={!canSubmit}
+        style={{
+          width: '100%', padding: '13px', borderRadius: '10px',
+          background: canSubmit ? '#6D28D9' : '#E2E2E2',
+          color: canSubmit ? '#fff' : '#9a9a9a',
+          border: 'none', fontFamily: 'inherit', fontSize: '14px', fontWeight: 700,
+          cursor: canSubmit ? 'pointer' : 'not-allowed', transition: 'all .12s ease',
+          boxShadow: canSubmit ? '3px 3px 0 #111' : 'none',
+        }}
+      >
+        generate real analogies ↗
+      </button>
+    </div>
+  )
+}
+
 /* ─── Find tab ───────────────────────────────────────────────── */
 
 const STEP_LABEL: React.CSSProperties = {
@@ -259,18 +337,23 @@ interface FindTabProps {
   topic: string; audience: string; goal: string; tone: string; searched: boolean
   results: (StreamedAnalogy | undefined)[]; isLoading: boolean; error: Error | undefined
   savedResultIds: Set<number>
+  showStub: boolean
   onTopic: (v: string) => void; onAudience: (v: string) => void
   onGoal: (v: string) => void; onTone: (v: string) => void
   onNext: () => void; onBack: () => void; onSearch: () => void
   onSaveResult: (idx: number) => void; onSaveAll: () => void
+  onGenerateWithKey: (key: string, remember: boolean) => void
+  onClearKey: () => void
 }
 
 function FindTab({
   step, topic, audience, goal, tone, searched,
   results, isLoading, error,
-  savedResultIds,
+  savedResultIds, showStub,
   onTopic, onAudience, onGoal, onTone, onNext, onBack, onSearch, onSaveResult, onSaveAll,
+  onGenerateWithKey, onClearKey,
 }: FindTabProps) {
+  const displayResults: StreamedAnalogy[] = showStub ? STUB_RESULTS : results.filter((r): r is StreamedAnalogy => !!r?.text)
   if (step === 1) {
     return (
       <>
@@ -312,8 +395,6 @@ function FindTab({
     )
   }
 
-  const visibleResults = results.filter((r): r is StreamedAnalogy => !!r?.text)
-
   return (
     <>
       <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', marginTop: '6px', gap: '12px' }}>
@@ -347,13 +428,15 @@ function FindTab({
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: '28px' }}>
             <span style={{ fontSize: '13px', fontWeight: 700, color: '#6D28D9' }}>
               {isLoading
-                ? `⟳ generating${visibleResults.length > 0 ? ` · ${visibleResults.length} so far` : '...'}`
+                ? `⟳ generating${displayResults.length > 0 ? ` · ${displayResults.length} so far` : '...'}`
                 : error
                   ? '⚠ something went wrong'
-                  : `✓ ${visibleResults.length} analogies`
+                  : showStub
+                    ? '↓ example results'
+                    : `✓ ${displayResults.length} analogies`
               }
             </span>
-            {!isLoading && !error && visibleResults.length > 0 && (
+            {!isLoading && !error && !showStub && displayResults.length > 0 && (
               <span style={{ fontSize: '11px', fontWeight: 700, letterSpacing: '1px', textTransform: 'uppercase', color: '#9a9a9a' }}>
                 tap to save
               </span>
@@ -366,34 +449,42 @@ function FindTab({
               background: '#FFF5F5', border: '1.5px solid #FFCDD2', color: '#C62828',
               fontSize: '13.5px', fontWeight: 500,
             }}>
-              Something went wrong. Please try again.
+              Something went wrong. Check your API key and try again.{' '}
+              <button onClick={onClearKey} style={{
+                background: 'none', border: 'none', color: '#C62828', fontFamily: 'inherit',
+                fontSize: '13.5px', fontWeight: 700, cursor: 'pointer', padding: 0,
+                textDecoration: 'underline',
+              }}>
+                update key
+              </button>
             </div>
           )}
 
           <div style={{ marginTop: '14px' }}>
-            {results.map((result, i) => {
-              if (!result?.text) return null
-              return (
-                <AnalogyResultCard
-                  key={i}
-                  text={result.text}
-                  fit={result.fit}
-                  saved={savedResultIds.has(i)}
-                  onSave={() => onSaveResult(i)}
-                  onCopy={() => navigator.clipboard.writeText(result.text!)}
-                />
-              )
-            })}
+            {showStub && <ApiKeyBanner onGenerate={onGenerateWithKey} />}
+            {displayResults.map((result, i) => (
+              <AnalogyResultCard
+                key={i}
+                text={result.text!}
+                fit={result.fit}
+                saved={savedResultIds.has(i)}
+                onSave={() => onSaveResult(i)}
+                onCopy={() => navigator.clipboard.writeText(result.text!)}
+              />
+            ))}
             {isLoading && <SkeletonCard />}
           </div>
 
-          {!isLoading && !error && visibleResults.length > 0 && (
+          {!isLoading && !error && !showStub && displayResults.length > 0 && (
             <>
               <CTAButton onClick={onSaveAll} marginTop='20px'>
                 save all to library <span style={{ fontSize: '18px', lineHeight: 1 }}>↗</span>
               </CTAButton>
               <TextLink onClick={onBack}>← reframe</TextLink>
             </>
+          )}
+          {!isLoading && showStub && (
+            <TextLink onClick={onBack}>← reframe</TextLink>
           )}
           {isLoading && (
             <TextLink onClick={onBack}>← cancel</TextLink>
@@ -542,6 +633,12 @@ export default function AnalogyApp() {
   const [libFilter, setLibFilter] = useState<LibFilter>('all')
   const [importOpen, setImportOpen] = useState(false)
   const [lib, setLib] = useState<Analogy[]>(SEED_LIB)
+  const [apiKey, setApiKey] = useState('')
+
+  useEffect(() => {
+    const saved = localStorage.getItem(STORAGE_KEY) || sessionStorage.getItem(STORAGE_KEY)
+    if (saved) setApiKey(saved)
+  }, [])
 
   const { object, submit, isLoading, error, stop } = useObject({
     api: '/api/chat',
@@ -549,10 +646,27 @@ export default function AnalogyApp() {
   })
 
   const results: (StreamedAnalogy | undefined)[] = object?.analogies ?? []
+  const showStub = searched && !apiKey && !isLoading
 
   function handleSearch() {
     setSearched(true)
-    submit({ topic, audience, goal, tone })
+    if (apiKey) submit({ topic, audience, goal, tone, apiKey })
+  }
+
+  function handleGenerateWithKey(key: string, remember: boolean) {
+    if (remember) {
+      localStorage.setItem(STORAGE_KEY, key)
+    } else {
+      sessionStorage.setItem(STORAGE_KEY, key)
+    }
+    setApiKey(key)
+    submit({ topic, audience, goal, tone, apiKey: key })
+  }
+
+  function handleClearKey() {
+    localStorage.removeItem(STORAGE_KEY)
+    sessionStorage.removeItem(STORAGE_KEY)
+    setApiKey('')
   }
 
   function saveResult(idx: number) {
@@ -599,11 +713,13 @@ export default function AnalogyApp() {
               step={step} topic={topic} audience={audience} goal={goal}
               tone={tone} searched={searched}
               results={results} isLoading={isLoading} error={error}
-              savedResultIds={savedResultIds}
+              savedResultIds={savedResultIds} showStub={showStub}
               onTopic={setTopic} onAudience={setAudience} onGoal={setGoal} onTone={setTone}
               onNext={() => setStep(2)} onBack={handleBack}
               onSearch={handleSearch}
               onSaveResult={saveResult} onSaveAll={saveAll}
+              onGenerateWithKey={handleGenerateWithKey}
+              onClearKey={handleClearKey}
             />
           ) : (
             <LibraryTab
